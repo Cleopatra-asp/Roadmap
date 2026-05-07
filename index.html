@@ -623,7 +623,7 @@
     gap: 1rem;
     margin-bottom: 2rem;
   }
-
+  @media (min-width: 600px) { .summary-grid { grid-template-columns: repeat(3, 1fr); } }
   @media (max-width: 480px) { .summary-grid { grid-template-columns: 1fr; } }
 
   .summary-card {
@@ -991,6 +991,336 @@
     gap: 0.7rem;
   }
   .week-complete-banner.show { display: flex; }
+
+  /* ===== 3-6-9 TRIPLE TICK ===== */
+  .rule369-section {
+    background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.03));
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .rule369-title {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+  }
+  .rule369-subtitle {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+  .rule369-days {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .rule369-day-row {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: var(--dark3);
+    padding: 0.6rem 0.9rem;
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+  .rule369-day-label {
+    font-size: 0.78rem;
+    color: var(--white2);
+    font-weight: 500;
+    flex: 1;
+    min-width: 60px;
+  }
+  .rule369-ticks {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .tick-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    border: 1.5px solid var(--gold-dark);
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.65rem;
+    color: var(--gold-dark);
+    font-weight: 700;
+    font-family: 'Hind Siliguri', sans-serif;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .tick-btn .tick-time { font-size: 0.55rem; letter-spacing: 0; }
+  .tick-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.08); }
+  .tick-btn.ticked {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--black);
+  }
+  .tick-btn.ticked .tick-check { display: block; }
+  .rule369-day-score {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    min-width: 40px;
+    text-align: right;
+  }
+  .rule369-weekly-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(201,168,76,0.2);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .rule369-weekly-total span { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; }
+
+  /* ===== EXERCISE TRACKER ===== */
+  .exercise-section { margin-bottom: 1.5rem; }
+  .exercise-day-row {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .exercise-day-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+  }
+  .exercise-day-name {
+    font-size: 0.75rem;
+    color: var(--gold-dark);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .exercise-done-badge {
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    background: rgba(46,204,113,0.15);
+    color: var(--green);
+    border: 1px solid rgba(46,204,113,0.3);
+    display: none;
+  }
+  .exercise-done-badge.show { display: block; }
+  .exercise-fields {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  @media (max-width: 480px) { .exercise-fields { grid-template-columns: 1fr 1fr; } }
+  .exercise-fields input, .exercise-fields select {
+    background: var(--dark3);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--white);
+    padding: 0.45rem 0.6rem;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 0.78rem;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .exercise-fields input:focus, .exercise-fields select:focus { border-color: var(--gold-dark); }
+  .exercise-fields select option { background: var(--dark3); }
+  .exercise-done-toggle {
+    background: none;
+    border: 1px solid rgba(46,204,113,0.3);
+    color: var(--text-muted);
+    padding: 0.4rem 0.8rem;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 600;
+  }
+  .exercise-done-toggle.active { background: rgba(46,204,113,0.15); color: var(--green); border-color: var(--green); }
+  .exercise-done-toggle:hover { border-color: var(--green); color: var(--green); }
+
+  /* ===== WATER TRACKER ===== */
+  .water-tracker {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+  }
+  .water-glass {
+    width: 34px;
+    height: 34px;
+    background: var(--dark3);
+    border: 1.5px solid rgba(100,180,255,0.25);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .water-glass.filled { background: rgba(100,180,255,0.2); border-color: rgba(100,180,255,0.6); }
+  .water-glass:hover { border-color: rgba(100,180,255,0.8); }
+  .water-label { font-size: 0.75rem; color: var(--text-muted); }
+  .water-count { font-size: 0.85rem; color: #64B4FF; font-weight: 700; font-family: 'Playfair Display', serif; }
+
+  /* ===== SLEEP TRACKER ===== */
+  .sleep-row {
+    display: flex;
+    gap: 0.7rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .sleep-row input {
+    background: var(--dark3);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--white);
+    padding: 0.5rem 0.7rem;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 0.82rem;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 110px;
+  }
+  .sleep-row input:focus { border-color: var(--gold-dark); }
+  .sleep-quality-stars {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+  }
+  .star-btn {
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: none;
+    border: none;
+    padding: 0;
+    filter: grayscale(1) opacity(0.4);
+    line-height: 1;
+  }
+  .star-btn.lit { filter: none; }
+  .star-btn:hover { transform: scale(1.2); }
+  .sleep-label { font-size: 0.72rem; color: var(--text-muted); }
+
+  /* ===== READING LOG ===== */
+  .reading-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .reading-row input {
+    background: var(--dark3);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--white);
+    padding: 0.5rem 0.7rem;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 0.82rem;
+    outline: none;
+    flex: 1;
+    min-width: 120px;
+    transition: border-color 0.2s;
+  }
+  .reading-row input:focus { border-color: var(--gold-dark); }
+  .reading-pages-badge {
+    font-size: 0.7rem;
+    color: var(--gold);
+    font-weight: 700;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 0.25rem 0.6rem;
+    white-space: nowrap;
+  }
+
+  /* ===== MINDSET SCORE ===== */
+  .mindset-score-section {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.6rem;
+  }
+  .mindset-score-label { font-size: 0.78rem; color: var(--text-muted); flex-shrink: 0; }
+  .score-dots {
+    display: flex;
+    gap: 0.35rem;
+  }
+  .score-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 3px;
+    border: 1.5px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    transition: all 0.2s;
+    font-family: 'Hind Siliguri', sans-serif;
+    background: var(--dark3);
+  }
+  .score-dot:hover { border-color: var(--gold); color: var(--gold); }
+  .score-dot.selected {
+    color: var(--black);
+    border-color: transparent;
+  }
+  .score-dot[data-v="1"].selected, .score-dot[data-v="2"].selected, .score-dot[data-v="3"].selected { background: #E74C3C; }
+  .score-dot[data-v="4"].selected, .score-dot[data-v="5"].selected, .score-dot[data-v="6"].selected { background: #E67E22; }
+  .score-dot[data-v="7"].selected, .score-dot[data-v="8"].selected { background: #27AE60; }
+  .score-dot[data-v="9"].selected, .score-dot[data-v="10"].selected { background: var(--gold); }
+  .mindset-score-value { font-size: 1rem; font-family: 'Playfair Display', serif; color: var(--gold); font-weight: 700; min-width: 30px; }
+
+  /* ===== NET WORTH GOAL ===== */
+  .networth-bar-wrap {
+    background: var(--dark3);
+    height: 10px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 0.6rem 0;
+  }
+  .networth-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+    border-radius: 3px;
+    transition: width 0.5s;
+  }
+  .networth-row {
+    display: flex;
+    gap: 0.7rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .networth-row input {
+    background: var(--dark3);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--white);
+    padding: 0.5rem 0.7rem;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 0.82rem;
+    outline: none;
+    flex: 1;
+    min-width: 100px;
+    transition: border-color 0.2s;
+  }
+  .networth-row input:focus { border-color: var(--gold-dark); }
+  .networth-pct-label { font-size: 0.85rem; color: var(--gold); font-weight: 700; font-family: 'Playfair Display', serif; min-width: 45px; }
+
+  /* tag exercise */
+  .tag-exercise { background: rgba(255,140,0,0.12); color: #FFA040; border: 1px solid rgba(255,140,0,0.25); }
 </style>
 </head>
 <body>
@@ -1002,7 +1332,7 @@
   <div class="cover-title">MILLIONAIRE<br>ROADMAP</div>
   <div class="cover-sub">মাল্টি-মিলিয়নেয়ার হওয়ার পথে</div>
   <div class="cover-divider"></div>
-  <div class="cover-tagline">LinkedIn · TikTok · 3-6-9 Rule · Client Hunting · Product Spread</div>
+  <div class="cover-tagline">LinkedIn · TikTok · 3-6-9 Rule · Exercise · Sleep · Net Worth</div>
   <div class="cover-meta">13 সপ্তাহ · 90 দিন · 1 লক্ষ্য</div>
   <button class="start-btn" onclick="startApp()">মিশন শুরু করুন →</button>
   <div class="cover-pwa-hint">💡 Chrome-এ খুলে <span>⋮ মেনু → "Add to Home screen"</span> করলে App shortcut পাবে</div>
@@ -1151,35 +1481,42 @@ const WEEKS = [
         { t: "LinkedIn প্রোফাইল অপ্টিমাইজ করো (ছবি, headline, about)", tag: "linkedin" },
         { t: "TikTok অ্যাকাউন্ট খোলো এবং বায়ো লিখো", tag: "tiktok" },
         { t: "নিজের core offer/product একটি বাক্যে লিখো", tag: "spread" },
+        { t: "২০ মিনিট হাঁটো বা যেকোনো ব্যায়াম করো", tag: "exercise" },
       ]},
       { d: "দিন ২", items: [
         { t: "LinkedIn-এ প্রথম introduction পোস্ট করো", tag: "linkedin" },
         { t: "3-6-9 Rule সম্পর্কে পড়ো ও নোট নাও", tag: "369" },
         { t: "নিজের টার্গেট ক্লায়েন্ট লিস্ট তৈরি শুরু করো (১০ জন)", tag: "client" },
+        { t: "সকালে ১৫ মিনিট স্ট্রেচিং বা যোগব্যায়াম", tag: "exercise" },
       ]},
       { d: "দিন ৩", items: [
         { t: "TikTok-এ প্রথম value video পোস্ট করো (৩০-৬০ সেকেন্ড)", tag: "tiktok" },
         { t: "LinkedIn-এ ৫ জন industry leader-কে ফলো করো", tag: "linkedin" },
         { t: "সকালে ৩টি মনের লক্ষ্য লিখো (3-6-9 affirmation)", tag: "369" },
+        { t: "৩০ মিনিট হাঁটা বা দৌড়ানো", tag: "exercise" },
       ]},
       { d: "দিন ৪", items: [
         { t: "১ জনের কাছে product/service স্প্রেড করো", tag: "spread" },
         { t: "LinkedIn-এ একটি শিল্পসম্পর্কিত আর্টিকেল শেয়ার করো", tag: "linkedin" },
         { t: "সন্ধ্যায় ৬টি কৃতজ্ঞতা লিখো", tag: "369" },
+        { t: "হোম ওয়ার্কআউট বা যোগব্যায়াম ২০ মিনিট", tag: "exercise" },
       ]},
       { d: "দিন ৫", items: [
         { t: "TikTok-এ দ্বিতীয় video পোস্ট করো", tag: "tiktok" },
         { t: "৩ জন সম্ভাব্য ক্লায়েন্টকে LinkedIn-এ কানেক্ট করো", tag: "client" },
         { t: "রাতে ৯টি স্বপ্নের লক্ষ্য লিখো (দীর্ঘমেয়াদি)", tag: "369" },
+        { t: "৩০ মিনিট যেকোনো cardio exercise", tag: "exercise" },
       ]},
       { d: "দিন ৬", items: [
         { t: "সপ্তাহের পারফরম্যান্স রিভিউ করো", tag: "learn" },
         { t: "LinkedIn পোস্ট — এই সপ্তাহে কী শিখলে", tag: "linkedin" },
         { t: "আরও ২ জনের কাছে product স্প্রেড করো", tag: "spread" },
+        { t: "সকালে হাঁটা ৩০ মিনিট (meditation সহ)", tag: "exercise" },
       ]},
       { d: "দিন ৭", items: [
         { t: "রেস্ট দিন — কিন্তু ১টি motivational/business বই/podcast শোনো", tag: "mindset" },
         { t: "আগামী সপ্তাহের content plan করো (৫ মিনিট)", tag: "learn" },
+        { t: "হালকা স্ট্রেচিং বা যোগব্যায়াম (rest day)", tag: "exercise" },
       ]},
     ]
   },
@@ -1888,6 +2225,18 @@ function renderWeek(wi) {
       </div>
     </div>
 
+    <!-- 3-6-9 TRIPLE TICK -->
+    ${render369Section(wi, w, ws)}
+
+    <!-- EXERCISE TRACKER -->
+    ${renderExerciseSection(wi, w, ws)}
+
+    <!-- WELLNESS: WATER + SLEEP + READING -->
+    ${renderWellnessSection(wi, w, ws)}
+
+    <!-- MINDSET SCORE + NET WORTH -->
+    ${renderMindsetNetWorth(wi, w, ws)}
+
     <!-- NOTES -->
     <div class="input-section">
       <div class="input-section-title">📝 সাপ্তাহিক নোট</div>
@@ -1906,10 +2255,310 @@ function renderWeek(wi) {
   document.getElementById('weekContent').innerHTML = html;
   renderExpenses(wi);
   renderIncomes(wi);
+  // Re-render dynamic sections
+  render369DOM(wi, w, ws);
+  renderExerciseDOM(wi, w, ws);
+  renderWellnessDOM(wi, w, ws);
+  renderMindsetDOM(wi, ws);
 }
 
-function getTagLabel(tag) {
-  const map = { linkedin: 'LinkedIn', tiktok: 'TikTok', '369': '3-6-9', client: 'ক্লায়েন্ট', spread: 'স্প্রেড', money: 'টাকা', learn: 'শেখা', mindset: 'মাইন্ডসেট' };
+// ===== 3-6-9 TRIPLE TICK =====
+const SESSIONS_369 = ['সকাল', 'বিকেল', 'রাত'];
+
+function render369Section(wi, w, ws) {
+  const days = w.checks.map(d => d.d);
+  return `
+    <div class="rule369-section">
+      <div class="rule369-title">🔢 ৩-৬-৯ রুল — তিনবার দৈনিক</div>
+      <div class="rule369-subtitle">প্রতিদিন তিনবার (সকাল / বিকেল / রাত) করতে হবে — সম্পন্ন হলে টিক দাও</div>
+      <div class="rule369-days" id="r369_${wi}"></div>
+      <div class="rule369-weekly-total">
+        <span>এই সপ্তাহে মোট সেশন সম্পন্ন:</span>
+        <span id="r369total_${wi}">0</span>
+      </div>
+    </div>
+  `;
+}
+
+function render369DOM(wi, w, ws) {
+  const container = document.getElementById(`r369_${wi}`);
+  if (!container) return;
+  if (!ws.rule369) ws.rule369 = {};
+  const days = w.checks.map(d => d.d);
+  let totalTicked = 0;
+  container.innerHTML = days.map(day => {
+    const dayKey = day.replace(/\s/g, '_');
+    const ticks = ws.rule369[dayKey] || [false, false, false];
+    const done = ticks.filter(Boolean).length;
+    totalTicked += done;
+    return `
+      <div class="rule369-day-row">
+        <div class="rule369-day-label">${day}</div>
+        <div class="rule369-ticks">
+          ${SESSIONS_369.map((s, si) => `
+            <button class="tick-btn ${ticks[si] ? 'ticked' : ''}"
+              onclick="toggle369(${wi}, '${dayKey}', ${si})"
+              title="${s}">
+              ${ticks[si] ? '✓' : ''}
+              <span class="tick-time">${s}</span>
+            </button>
+          `).join('')}
+        </div>
+        <div class="rule369-day-score">${done}/3</div>
+      </div>
+    `;
+  }).join('');
+  const total = document.getElementById(`r369total_${wi}`);
+  if (total) total.textContent = totalTicked;
+}
+
+function toggle369(wi, dayKey, sessionIdx) {
+  const ws = getWeekState(wi);
+  if (!ws.rule369) ws.rule369 = {};
+  if (!ws.rule369[dayKey]) ws.rule369[dayKey] = [false, false, false];
+  ws.rule369[dayKey][sessionIdx] = !ws.rule369[dayKey][sessionIdx];
+  saveState();
+  render369DOM(wi, WEEKS[wi], ws);
+}
+
+// ===== EXERCISE TRACKER =====
+const EXERCISE_TYPES = ['হাঁটা', 'দৌড়ানো', 'যোগব্যায়াম', 'জিম', 'সাইকেলিং', 'সাঁতার', 'হোম ওয়ার্কআউট', 'অন্যান্য'];
+
+function renderExerciseSection(wi, w, ws) {
+  return `
+    <div class="input-section exercise-section">
+      <div class="input-section-title">💪 দৈনিক ব্যায়াম ট্র্যাকার</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:0.8rem;">শরীর সুস্থ = মাথা তীক্ষ্ণ = ব্যবসা শক্তিশালী। প্রতিদিনের ব্যায়াম লগ করো।</div>
+      <div id="exerciseLog_${wi}"></div>
+    </div>
+  `;
+}
+
+function renderExerciseDOM(wi, w, ws) {
+  const container = document.getElementById(`exerciseLog_${wi}`);
+  if (!container) return;
+  if (!ws.exercise) ws.exercise = {};
+  const days = w.checks.map(d => d.d);
+  container.innerHTML = days.map(day => {
+    const dayKey = day.replace(/\s/g, '_');
+    const ex = ws.exercise[dayKey] || { type: '', duration: '', intensity: '', done: false };
+    return `
+      <div class="exercise-day-row">
+        <div class="exercise-day-header">
+          <div class="exercise-day-name">${day}</div>
+          <div class="exercise-done-badge ${ex.done ? 'show' : ''}">✓ সম্পন্ন</div>
+        </div>
+        <div class="exercise-fields">
+          <select onchange="saveExercise(${wi},'${dayKey}','type',this.value)">
+            <option value="">ধরন বেছে নাও</option>
+            ${EXERCISE_TYPES.map(t => `<option value="${t}" ${ex.type===t?'selected':''}>${t}</option>`).join('')}
+          </select>
+          <input type="number" placeholder="মিনিট" min="0" max="300"
+            value="${ex.duration || ''}"
+            onchange="saveExercise(${wi},'${dayKey}','duration',this.value)" />
+          <select onchange="saveExercise(${wi},'${dayKey}','intensity',this.value)">
+            <option value="">তীব্রতা</option>
+            <option value="হালকা" ${ex.intensity==='হালকা'?'selected':''}>হালকা</option>
+            <option value="মাঝারি" ${ex.intensity==='মাঝারি'?'selected':''}>মাঝারি</option>
+            <option value="তীব্র" ${ex.intensity==='তীব্র'?'selected':''}>তীব্র</option>
+          </select>
+        </div>
+        <button class="exercise-done-toggle ${ex.done ? 'active' : ''}"
+          onclick="toggleExerciseDone(${wi},'${dayKey}')">
+          ${ex.done ? '✓ ব্যায়াম করেছি' : '○ ব্যায়াম করিনি'}
+        </button>
+      </div>
+    `;
+  }).join('');
+}
+
+function saveExercise(wi, dayKey, field, val) {
+  const ws = getWeekState(wi);
+  if (!ws.exercise) ws.exercise = {};
+  if (!ws.exercise[dayKey]) ws.exercise[dayKey] = { type: '', duration: '', intensity: '', done: false };
+  ws.exercise[dayKey][field] = val;
+  localStorage.setItem('mm90_state', JSON.stringify(state));
+}
+
+function toggleExerciseDone(wi, dayKey) {
+  const ws = getWeekState(wi);
+  if (!ws.exercise) ws.exercise = {};
+  if (!ws.exercise[dayKey]) ws.exercise[dayKey] = { type: '', duration: '', intensity: '', done: false };
+  ws.exercise[dayKey].done = !ws.exercise[dayKey].done;
+  saveState();
+  renderExerciseDOM(wi, WEEKS[wi], ws);
+}
+
+// ===== WELLNESS: WATER + SLEEP + READING =====
+function renderWellnessSection(wi, w, ws) {
+  return `
+    <div class="input-section">
+      <div class="input-section-title">🌊 সুস্থতা ট্র্যাকার</div>
+      <div id="wellnessLog_${wi}"></div>
+    </div>
+  `;
+}
+
+function renderWellnessDOM(wi, w, ws) {
+  const container = document.getElementById(`wellnessLog_${wi}`);
+  if (!container) return;
+  if (!ws.wellness) ws.wellness = {};
+  const wl = ws.wellness;
+
+  // Water (weekly, 8 glasses/day target)
+  const waterGlasses = wl.water || 0;
+  const waterHTML = `
+    <div style="margin-bottom:1rem;">
+      <div style="font-size:0.72rem;color:var(--text-muted);font-weight:700;letter-spacing:0.1em;margin-bottom:0.5rem;">💧 পানি পান — সাপ্তাহিক (লক্ষ্য: ৫৬ গ্লাস)</div>
+      <div class="water-tracker">
+        ${Array.from({length:14}, (_, i) => `
+          <div class="water-glass ${i < waterGlasses ? 'filled' : ''}"
+            onclick="toggleWater(${wi}, ${i})">💧</div>
+        `).join('')}
+        <span class="water-count">${waterGlasses}/১৪</span>
+      </div>
+      <div class="water-label">প্রতিটি গ্লাস = ½ লিটার পানি (আজকের মিনিমাম ২টি)</div>
+    </div>
+  `;
+
+  // Sleep
+  const sleep = wl.sleep || { bed: '', wake: '', quality: 0 };
+  const sleepHTML = `
+    <div style="margin-bottom:1rem;">
+      <div style="font-size:0.72rem;color:var(--text-muted);font-weight:700;letter-spacing:0.1em;margin-bottom:0.5rem;">😴 ঘুম ট্র্যাকার (গতকালের রাত)</div>
+      <div class="sleep-row">
+        <span class="sleep-label">শোয়া:</span>
+        <input type="time" value="${sleep.bed || ''}" onchange="saveSleep(${wi},'bed',this.value)" />
+        <span class="sleep-label">উঠা:</span>
+        <input type="time" value="${sleep.wake || ''}" onchange="saveSleep(${wi},'wake',this.value)" />
+        <span class="sleep-label">মান:</span>
+        <div class="sleep-quality-stars">
+          ${[1,2,3,4,5].map(s => `
+            <button class="star-btn ${(sleep.quality||0) >= s ? 'lit' : ''}"
+              onclick="saveSleep(${wi},'quality',${s})">⭐</button>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Reading log
+  const reading = wl.reading || { book: '', pages: '' };
+  const readingHTML = `
+    <div>
+      <div style="font-size:0.72rem;color:var(--text-muted);font-weight:700;letter-spacing:0.1em;margin-bottom:0.5rem;">📚 পড়ার লগ (এই সপ্তাহ)</div>
+      <div class="reading-row">
+        <input type="text" placeholder="বই/article-এর নাম লিখো..." value="${(reading.book||'').replace(/"/g,'&quot;')}"
+          oninput="saveReading(${wi},'book',this.value)" />
+        <input type="number" placeholder="পৃষ্ঠা" min="0" style="width:80px;flex:none;"
+          value="${reading.pages || ''}"
+          oninput="saveReading(${wi},'pages',this.value)" />
+        <div class="reading-pages-badge">${reading.pages || 0} পৃষ্ঠা</div>
+      </div>
+    </div>
+  `;
+
+  container.innerHTML = waterHTML + sleepHTML + readingHTML;
+}
+
+function toggleWater(wi, idx) {
+  const ws = getWeekState(wi);
+  if (!ws.wellness) ws.wellness = {};
+  const cur = ws.wellness.water || 0;
+  ws.wellness.water = idx < cur ? idx : idx + 1;
+  saveState();
+  renderWellnessDOM(wi, WEEKS[wi], ws);
+}
+
+function saveSleep(wi, field, val) {
+  const ws = getWeekState(wi);
+  if (!ws.wellness) ws.wellness = {};
+  if (!ws.wellness.sleep) ws.wellness.sleep = { bed: '', wake: '', quality: 0 };
+  ws.wellness.sleep[field] = field === 'quality' ? parseInt(val) : val;
+  saveState();
+  renderWellnessDOM(wi, WEEKS[wi], ws);
+}
+
+function saveReading(wi, field, val) {
+  const ws = getWeekState(wi);
+  if (!ws.wellness) ws.wellness = {};
+  if (!ws.wellness.reading) ws.wellness.reading = { book: '', pages: '' };
+  ws.wellness.reading[field] = val;
+  localStorage.setItem('mm90_state', JSON.stringify(state));
+  // update badge
+  const badge = document.querySelector(`#wellnessLog_${wi} .reading-pages-badge`);
+  if (badge && field === 'pages') badge.textContent = (val || 0) + ' পৃষ্ঠা';
+}
+
+// ===== MINDSET SCORE + NET WORTH =====
+function renderMindsetNetWorth(wi, w, ws) {
+  return `
+    <div class="input-section">
+      <div class="input-section-title">🧠 মাইন্ডসেট স্কোর ও সাপ্তাহিক সঞ্চয় লক্ষ্য</div>
+      <div id="mindsetNW_${wi}"></div>
+    </div>
+  `;
+}
+
+function renderMindsetDOM(wi, ws) {
+  const container = document.getElementById(`mindsetNW_${wi}`);
+  if (!container) return;
+  const ms = ws.mindsetScore || 0;
+  const nw = ws.networth || { goal: '', saved: '' };
+  const pct = nw.goal > 0 ? Math.min(100, Math.round(((parseFloat(nw.saved)||0) / parseFloat(nw.goal)) * 100)) : 0;
+
+  container.innerHTML = `
+    <div style="margin-bottom:1.2rem;">
+      <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:0.5rem;">আজকের মাইন্ডসেট স্কোর কত? (১=ভয়/নিরুৎসাহ, ১০=আগুন মোড)</div>
+      <div class="mindset-score-section">
+        <span class="mindset-score-label">স্কোর:</span>
+        <div class="score-dots">
+          ${Array.from({length:10}, (_,i) => i+1).map(v => `
+            <div class="score-dot ${ms===v?'selected':''}" data-v="${v}"
+              onclick="saveMindsetScore(${wi},${v})">${v}</div>
+          `).join('')}
+        </div>
+        <div class="mindset-score-value">${ms > 0 ? ms + '/10' : '--'}</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:0.5rem;">💰 এই সপ্তাহে সঞ্চয় লক্ষ্য (টাকা)</div>
+      <div class="networth-row">
+        <input type="number" placeholder="লক্ষ্য (৳)" value="${nw.goal || ''}"
+          oninput="saveNetWorth(${wi},'goal',this.value)" />
+        <input type="number" placeholder="সঞ্চিত (৳)" value="${nw.saved || ''}"
+          oninput="saveNetWorth(${wi},'saved',this.value)" />
+        <div class="networth-pct-label">${pct}%</div>
+      </div>
+      <div class="networth-bar-wrap">
+        <div class="networth-bar-fill" id="nwBar_${wi}" style="width:${pct}%"></div>
+      </div>
+      <div style="font-size:0.72rem;color:var(--text-muted);">লক্ষ্য পূরণ হলে পরের সপ্তাহের লক্ষ্য বাড়াও — compound growth-ই millionaire বানায়!</div>
+    </div>
+  `;
+}
+
+function saveMindsetScore(wi, val) {
+  const ws = getWeekState(wi);
+  ws.mindsetScore = ws.mindsetScore === val ? 0 : val;
+  saveState();
+  renderMindsetDOM(wi, ws);
+}
+
+function saveNetWorth(wi, field, val) {
+  const ws = getWeekState(wi);
+  if (!ws.networth) ws.networth = { goal: '', saved: '' };
+  ws.networth[field] = val;
+  localStorage.setItem('mm90_state', JSON.stringify(state));
+  // update bar
+  const nw = ws.networth;
+  const pct = nw.goal > 0 ? Math.min(100, Math.round(((parseFloat(nw.saved)||0) / parseFloat(nw.goal)) * 100)) : 0;
+  const bar = document.getElementById(`nwBar_${wi}`);
+  const pctEl = document.querySelector(`#mindsetNW_${wi} .networth-pct-label`);
+  if (bar) bar.style.width = pct + '%';
+  if (pctEl) pctEl.textContent = pct + '%';
+}
+  const map = { linkedin: 'LinkedIn', tiktok: 'TikTok', '369': '3-6-9', client: 'ক্লায়েন্ট', spread: 'স্প্রেড', money: 'টাকা', learn: 'শেখা', mindset: 'মাইন্ডসেট', exercise: 'ব্যায়াম' };
   return map[tag] || tag;
 }
 
@@ -2214,6 +2863,18 @@ function renderSummary() {
   const overallPct = totalChecks === 0 ? 0 : Math.round((doneChecks / totalChecks) * 100);
   const netProfit = totalIncome - totalExpense;
 
+  // Count 369 sessions and exercise days
+  let total369 = 0, totalExDays = 0;
+  WEEKS.forEach((w, wi) => {
+    const ws = getWeekState(wi);
+    if (ws.rule369) {
+      Object.values(ws.rule369).forEach(ticks => { total369 += ticks.filter(Boolean).length; });
+    }
+    if (ws.exercise) {
+      Object.values(ws.exercise).forEach(ex => { if (ex.done) totalExDays++; });
+    }
+  });
+
   const weekRows = WEEKS.map((w, wi) => {
     const pct = getWeekPct(wi);
     return `
@@ -2242,6 +2903,16 @@ function renderSummary() {
         <div class="summary-card-title">মোট প্রোডাক্ট স্প্রেড</div>
         <div class="summary-big-num">${totalSpread}</div>
         <div class="summary-sub">জনের কাছে পৌঁছেছো</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card-title">৩-৬-৯ সেশন সম্পন্ন</div>
+        <div class="summary-big-num" style="color:var(--gold)">${total369}</div>
+        <div class="summary-sub">লক্ষ্য: ${90*3} সেশন</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card-title">ব্যায়ামের দিন</div>
+        <div class="summary-big-num" style="color:#FFA040">${totalExDays}</div>
+        <div class="summary-sub">মোট সক্রিয় দিন</div>
       </div>
       <div class="summary-card">
         <div class="summary-card-title">মোট আয়</div>
