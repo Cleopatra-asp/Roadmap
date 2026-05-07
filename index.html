@@ -1157,8 +1157,8 @@
     margin-bottom: 0.5rem;
   }
   .water-glass {
-    width: 34px;
-    height: 34px;
+    width: 28px;
+    height: 28px;
     background: var(--dark3);
     border: 1.5px solid rgba(100,180,255,0.25);
     border-radius: 4px;
@@ -1166,7 +1166,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
+    font-size: 0.85rem;
     transition: all 0.2s;
     user-select: none;
   }
@@ -2015,7 +2015,10 @@ function saveState() {
 }
 
 function getWeekState(w) {
-  if (!state[w]) state[w] = { checks: {}, spread: 0, expenses: [], notes: '' };
+  if (!state[w]) state[w] = { checks: {}, spread: 0, expenses: [], incomes: [], notes: '' };
+  if (!state[w].incomes) state[w].incomes = [];
+  if (!state[w].expenses) state[w].expenses = [];
+  if (!state[w].checks) state[w].checks = {};
   return state[w];
 }
 
@@ -2038,7 +2041,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const s = localStorage.getItem('mm90_state');
     if (s) {
       const parsed = JSON.parse(s);
-      if (parsed && Object.keys(parsed).length > 0) {
+      const keys = Object.keys(parsed).filter(k => k !== '_lastWeek' && k !== 'globalNote');
+      if (parsed && keys.length > 0) {
         startApp();
       }
     }
@@ -2120,7 +2124,7 @@ function updateGlobalProgress() {
 function renderWeek(wi) {
   currentWeekIdx = wi;
   state._lastWeek = wi;
-  saveState();
+  localStorage.setItem('mm90_state', JSON.stringify(state)); // persist without toast/progress update
   const w = WEEKS[wi];
   const ws = getWeekState(wi);
   const pct = getWeekPct(wi);
@@ -2166,7 +2170,6 @@ function renderWeek(wi) {
       <div class="day-block">
         <div class="day-label">${d.d}</div>
         ${d.items.map(it => {
-          const key = `${d.d}__${it.t}_${it.t}`;
           const realKey = `${d.d}__${it.t}`;
           const isDone = ws.checks[realKey] || false;
           return `
@@ -2405,19 +2408,20 @@ function renderWellnessDOM(wi, w, ws) {
   if (!ws.wellness) ws.wellness = {};
   const wl = ws.wellness;
 
-  // Water (weekly, 8 glasses/day target)
+  // Water (weekly, 8 glasses/day target = 56/week)
   const waterGlasses = wl.water || 0;
+  const WATER_TARGET = 56;
   const waterHTML = `
     <div style="margin-bottom:1rem;">
-      <div style="font-size:0.72rem;color:var(--text-muted);font-weight:700;letter-spacing:0.1em;margin-bottom:0.5rem;">💧 পানি পান — সাপ্তাহিক (লক্ষ্য: ৫৬ গ্লাস)</div>
+      <div style="font-size:0.72rem;color:var(--text-muted);font-weight:700;letter-spacing:0.1em;margin-bottom:0.5rem;">💧 পানি পান — সাপ্তাহিক (লক্ষ্য: ${WATER_TARGET} গ্লাস)</div>
       <div class="water-tracker">
-        ${Array.from({length:14}, (_, i) => `
+        ${Array.from({length: WATER_TARGET}, (_, i) => `
           <div class="water-glass ${i < waterGlasses ? 'filled' : ''}"
             onclick="toggleWater(${wi}, ${i})">💧</div>
         `).join('')}
-        <span class="water-count">${waterGlasses}/১৪</span>
+        <span class="water-count">${waterGlasses}/${WATER_TARGET}</span>
       </div>
-      <div class="water-label">প্রতিটি গ্লাস = ½ লিটার পানি (আজকের মিনিমাম ২টি)</div>
+      <div class="water-label">প্রতিটি গ্লাস = ½ লিটার পানি (দৈনিক লক্ষ্য ৮টি)</div>
     </div>
   `;
 
@@ -2484,7 +2488,7 @@ function saveReading(wi, field, val) {
   if (!ws.wellness) ws.wellness = {};
   if (!ws.wellness.reading) ws.wellness.reading = { book: '', pages: '' };
   ws.wellness.reading[field] = val;
-  localStorage.setItem('mm90_state', JSON.stringify(state));
+  saveState();
   // update badge
   const badge = document.querySelector(`#wellnessLog_${wi} .reading-pages-badge`);
   if (badge && field === 'pages') badge.textContent = (val || 0) + ' পৃষ্ঠা';
@@ -2549,7 +2553,7 @@ function saveNetWorth(wi, field, val) {
   const ws = getWeekState(wi);
   if (!ws.networth) ws.networth = { goal: '', saved: '' };
   ws.networth[field] = val;
-  localStorage.setItem('mm90_state', JSON.stringify(state));
+  saveState();
   // update bar
   const nw = ws.networth;
   const pct = nw.goal > 0 ? Math.min(100, Math.round(((parseFloat(nw.saved)||0) / parseFloat(nw.goal)) * 100)) : 0;
@@ -2558,6 +2562,7 @@ function saveNetWorth(wi, field, val) {
   if (bar) bar.style.width = pct + '%';
   if (pctEl) pctEl.textContent = pct + '%';
 }
+function getTagLabel(tag) {
   const map = { linkedin: 'LinkedIn', tiktok: 'TikTok', '369': '3-6-9', client: 'ক্লায়েন্ট', spread: 'স্প্রেড', money: 'টাকা', learn: 'শেখা', mindset: 'মাইন্ডসেট', exercise: 'ব্যায়াম' };
   return map[tag] || tag;
 }
@@ -2567,10 +2572,10 @@ function toggleCheck(wi, key) {
   ws.checks[key] = !ws.checks[key];
   saveState();
   // Update this item visually
-  const items = document.querySelectorAll('.check-item');
-  items.forEach(el => {
-    if (el.getAttribute('onclick')?.includes(`'${key}'`) || el.getAttribute('onclick')?.includes(`"${key}"`)) {
-      el.classList.toggle('done', ws.checks[key]);
+  document.querySelectorAll('.check-item').forEach(el => {
+    const oc = el.getAttribute('onclick') || '';
+    if (oc.includes(`'${key}'`) || oc.includes(`"${key}"`)) {
+      el.classList.toggle('done', !!ws.checks[key]);
     }
   });
   // Re-render stats
@@ -2581,8 +2586,9 @@ function toggleCheck(wi, key) {
     total++;
     if (ws.checks[`${d.d}__${it.t}`]) done++;
   }));
-  document.querySelector('.week-stats .stat-box:first-child .stat-num').textContent = pct + '%';
-  document.querySelector('.week-stats .stat-box:nth-child(2) .stat-num').textContent = `${done}/${total}`;
+  const statBoxes = document.querySelectorAll('.week-stats .stat-box .stat-num');
+  if (statBoxes[0]) statBoxes[0].textContent = pct + '%';
+  if (statBoxes[1]) statBoxes[1].textContent = `${done}/${total}`;
   const banner = document.querySelector('.week-complete-banner');
   if (banner) banner.classList.toggle('show', pct === 100);
   updateGlobalProgress();
@@ -2591,8 +2597,10 @@ function toggleCheck(wi, key) {
 function changeSpread(wi, delta) {
   const ws = getWeekState(wi);
   ws.spread = Math.max(0, (ws.spread || 0) + delta);
-  document.getElementById(`spreadNum_${wi}`).textContent = ws.spread;
-  document.querySelector('.week-stats .stat-box:nth-child(3) .stat-num').textContent = ws.spread;
+  const spreadEl = document.getElementById(`spreadNum_${wi}`);
+  if (spreadEl) spreadEl.textContent = ws.spread;
+  const statBoxes = document.querySelectorAll('.week-stats .stat-box .stat-num');
+  if (statBoxes[2]) statBoxes[2].textContent = ws.spread;
   saveState();
 }
 
@@ -2701,12 +2709,12 @@ function saveNotes(wi) {
   const ws = getWeekState(wi);
   const el = document.getElementById(`weekNotes_${wi}`);
   if (el) ws.notes = el.value;
-  saveState();
+  localStorage.setItem('mm90_state', JSON.stringify(state));
 }
 
 function saveAllData(wi) {
   saveNotes(wi);
-  saveState();
+  saveState(); // this shows the toast
 }
 
 function confirmReset(wi) {
@@ -2750,7 +2758,11 @@ function importData(event) {
         state = importedState;
         localStorage.setItem('mm90_state', JSON.stringify(state));
         const activeWeek = typeof state._lastWeek === 'number' ? state._lastWeek : 0;
-        renderWeek(activeWeek);
+        if (activeWeek >= WEEKS.length) {
+          renderSummary(); setActiveTab(WEEKS.length);
+        } else {
+          renderWeek(activeWeek); setActiveTab(activeWeek);
+        }
         updateGlobalProgress();
         showToast('✓ Import সফল!');
       }
@@ -2839,10 +2851,18 @@ function setupKeyboardShortcuts() {
     if (e.altKey && e.key === 'z') { e.preventDefault(); renderSummary(); setActiveTab(WEEKS.length); }
     if (e.altKey && e.key === 'ArrowRight') { e.preventDefault(); nextWeek(); }
     if (e.altKey && e.key === 'ArrowLeft') { e.preventDefault(); prevWeek(); }
+    if (e.key === '?') { e.preventDefault(); toggleShortcutHint(); }
   });
 }
 
-function toggleShortcutHint() {}
+function toggleShortcutHint() {
+  const hint = document.getElementById('shortcutHint');
+  const backdrop = document.getElementById('shortcut-backdrop');
+  if (!hint || !backdrop) return;
+  const isOpen = hint.classList.contains('show');
+  hint.classList.toggle('show', !isOpen);
+  backdrop.classList.toggle('show', !isOpen);
+}
 
 // ===== SUMMARY =====
 function renderSummary() {
